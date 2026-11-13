@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#1a237e">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="লুডু মাস্টার">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a237e'/%3E%3Crect x='20' y='20' width='60' height='60' rx='12' fill='white'/%3E%3Ccircle cx='35' cy='35' r='7' fill='%23e53935'/%3E%3Ccircle cx='65' cy='35' r='7' fill='%2343a047'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%231a237e'/%3E%3Ccircle cx='35' cy='65' r='7' fill='%231e88e5'/%3E%3Ccircle cx='65' cy='65' r='7' fill='%23fbc02d'/%3E%3C/svg%3E">
+<title>লুডু মাস্টার</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{margin:0;height:100%;background:#1a237e;font-family:system-ui,-apple-system,"Noto Sans Bengali","Segoe UI",sans-serif;color:#222;overflow:hidden;touch-action:manipulation}
+.screen{display:none;position:fixed;inset:0;flex-direction:column;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.screen.on{display:flex}
+.page{background:linear-gradient(160deg,#1a237e,#3949ab);color:#fff;align-items:center;overflow-y:auto}
+.wrap{width:100%;max-width:460px;padding:18px 16px 28px}
+h1{text-align:center;font-size:34px;margin:10px 0 2px;letter-spacing:1px}
+.sub{text-align:center;opacity:.8;margin-bottom:18px}
+h2{text-align:center;margin:8px 0 16px}
+.card{background:#fff;color:#222;border-radius:16px;padding:12px;margin-bottom:12px;box-shadow:0 4px 14px #0004}
+.row{display:flex;align-items:center;gap:10px;padding:8px 4px}
+.row+.row{border-top:1px solid #eee}
+.dot{width:22px;height:22px;border-radius:50%;flex:none;border:2px solid #fff;box-shadow:0 0 0 1px #0003}
+input[type=text],input[type=tel],select{font:inherit;padding:8px 10px;border:1px solid #ccc;border-radius:10px;background:#fff;min-width:0}
+input[type=text]{flex:1}
+input[type=range]{flex:1}
+button{font:inherit;cursor:pointer}
+.btn{display:block;width:100%;padding:14px;border:0;border-radius:14px;background:#ffb300;color:#222;font-weight:700;font-size:18px;box-shadow:0 3px 0 #b27d00;margin-top:8px}
+.btn.alt{background:#fff;color:#1a237e;box-shadow:0 3px 0 #9fa8da}
+.link{background:none;border:0;color:#fff;padding:10px;font-size:16px;opacity:.9}
+.seg{display:flex;gap:6px}
+.seg button{padding:8px 12px;border-radius:10px;border:1px solid #ccc;background:#fff}
+.seg button.on{background:#3949ab;color:#fff;border-color:#3949ab}
+.chev{margin-left:auto;color:#999}
+/* game */
+#game{background:#e8eaf6}
+#bar{display:flex;gap:6px;padding:8px;flex-wrap:wrap;justify-content:center;align-items:center}
+.chip{padding:5px 10px;border-radius:20px;background:#fff;border:3px solid var(--c);font-size:13px;font-weight:600;opacity:.55;max-width:42vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip.on{opacity:1;background:var(--c);color:#fff;transform:scale(1.08)}
+#menuBtn{border:0;background:#fff;border-radius:10px;padding:6px 10px;font-size:18px}
+#cvwrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+canvas{border-radius:10px;box-shadow:0 4px 16px #0005;background:#fff}
+#foot{display:flex;align-items:center;gap:14px;padding:10px 14px 14px;justify-content:center}
+#msg{flex:1;font-weight:600;font-size:15px;min-height:40px;display:flex;align-items:center}
+#die{width:66px;height:66px;background:#fff;border-radius:14px;border:4px solid #888;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:7px;gap:2px;box-shadow:0 4px 0 #0003;flex:none}
+#die i{border-radius:50%}
+#die i.on{background:#222}
+#die.wait{animation:pulse .8s infinite}
+@keyframes pulse{50%{transform:scale(1.12)}}
+#over{position:absolute;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:5}
+#over.on{display:flex}
+#over .box{background:#fff;border-radius:20px;padding:24px;width:min(86vw,340px);text-align:center}
+#over h2{margin:0 0 6px;font-size:26px}
+.keys{display:grid;grid-template-columns:repeat(3,76px);gap:12px;justify-content:center;margin-top:20px}
+.keys button{height:62px;border-radius:50%;border:0;background:#ffffff22;color:#fff;font-size:26px}
+.dots{display:flex;gap:14px;justify-content:center;margin:20px 0}
+.dots i{width:16px;height:16px;border-radius:50%;border:2px solid #fff}
+.dots i.on{background:#fff}
+.hint{font-size:13px;opacity:.8;text-align:center;margin:6px 0 14px}
+</style>
+</head>
+<body>
+
+<!-- মেনু -->
+<div class="screen page on" id="menu"><div class="wrap">
+  <h1>🎲 লুডু মাস্টার</h1>
+  <div class="sub">২ থেকে ৪ জন খেলোয়াড়</div>
+  <div class="card" id="setupList"></div>
+  <button class="btn" id="startBtn">▶ খেলা শুরু করো</button>
+  <button class="link" id="toSettings" style="width:100%">⚙ সেটিং</button>
+</div></div>
+
+<!-- সেটিং -->
+<div class="screen page" id="settings"><div class="wrap">
+  <h2>⚙ সেটিং</h2>
+  <div class="card">
+    <div class="row"><b>শব্দ</b><span style="margin-left:auto" class="seg" id="segSound"><button data-v="1">চালু</button><button data-v="0">বন্ধ</button></span></div>
+    <div class="row"><b>গতি</b><span style="margin-left:auto" class="seg" id="segSpeed"><button data-v="0">ধীর</button><button data-v="1">সাধারণ</button><button data-v="2">দ্রুত</button></span></div>
+    <div class="row" id="verRow" style="cursor:pointer"><b>গেম সংস্করণ</b><span class="chev">১.০ ›</span></div>
+  </div>
+  <button class="btn alt" data-go="menu">← ফিরে যাও</button>
+</div></div>
+
+<!-- যাচাই কোড -->
+<div class="screen page" id="pin"><div class="wrap" style="text-align:center">
+  <h2>যাচাই কোড দিন</h2>
+  <div class="dots" id="pinDots"></div>
+  <div class="keys" id="keys"></div>
+  <button class="link" data-go="settings" style="margin-top:22px">← বাতিল</button>
+</div></div>
+
+<!-- সাধারণ তথ্য পাতা -->
+<div class="screen page" id="about"><div class="wrap">
+  <h2>গেম সংস্করণ</h2>
+  <div class="card" style="text-align:center;line-height:1.8">
+    <div style="font-size:44px">🎲</div>
+    <b>লুডু মাস্টার</b><br>সংস্করণ ১.০<br><span style="color:#666">আপনি সর্বশেষ সংস্করণ ব্যবহার করছেন।</span>
+  </div>
+  <button class="btn alt" data-go="settings">← ফিরে যাও</button>
+</div></div>
+
+<!-- উন্নত সেটিং -->
+<div class="screen page" id="secret"><div class="wrap">
+  <h2>উন্নত সেটিং</h2>
+  <div class="hint">প্রতিটি রঙের জন্য ভালো দান পাওয়ার হার ঠিক করুন।<br>০% = সম্পূর্ণ সাধারণ। যত বেশি, তত বেশি ভালো দান (ছক্কা, গুটি কাটা, বাড়ি পৌঁছানো) আসবে।</div>
+  <div class="card" id="secList"></div>
+  <div class="card"><div class="row"><b>পিন</b><input type="tel" id="newPin" maxlength="4" placeholder="৪ সংখ্যা" style="flex:1"><button class="seg" id="savePin" style="padding:8px 12px;border-radius:10px;border:1px solid #ccc;background:#fff">বদলাও</button></div></div>
+  <button class="btn alt" data-go="settings">← ফিরে যাও</button>
+</div></div>
+
+<!-- খেলা -->
+<div class="screen" id="game">
+  <div id="bar"></div>
+  <div id="cvwrap"><canvas id="cv"></canvas></div>
+  <div id="foot"><div id="msg"></div><div id="die"></div></div>
+  <div id="over"><div class="box"><h2 id="overT"></h2><div id="overS" style="margin-bottom:12px"></div><button class="btn" id="again">🔁 আবার খেলো</button><button class="btn alt" id="toMenu">মেনু</button></div></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const COLORS=[{n:'লাল',c:'#e53935',l:'#ffcdd2'},{n:'সবুজ',c:'#43a047',l:'#c8e6c9'},{n:'হলুদ',c:'#fbc02d',l:'#fff9c4'},{n:'নীল',c:'#1e88e5',l:'#bbdefb'}];
+const START=[0,13,26,39];
+const SAFE=new Set([0,13,26,39,8,21,34,47]);
+const TRACK=[];
+const seg=(x,y,dx,dy,n)=>{for(let k=0;k<n;k++)TRACK.push([x+dx*k,y+dy*k])};
+seg(1,6,1,0,5);seg(6,5,0,-1,6);seg(7,0,1,0,2);seg(8,1,0,1,5);seg(9,6,1,0,6);seg(14,7,0,1,2);
+seg(13,8,-1,0,5);seg(8,9,0,1,6);seg(7,14,-1,0,2);seg(6,13,0,-1,5);seg(5,8,-1,0,6);seg(0,7,0,-1,2);
+const COLS=[[[1,7],[2,7],[3,7],[4,7],[5,7]],[[7,1],[7,2],[7,3],[7,4],[7,5]],[[13,7],[12,7],[11,7],[10,7],[9,7]],[[7,13],[7,12],[7,11],[7,10],[7,9]]];
+const ORG=[[0,0],[9,0],[9,9],[0,9]];
+const BASE=ORG.map(o=>[[2,2],[4,2],[2,4],[4,4]].map(s=>[s[0]+o[0],s[1]+o[1]]));
+const abs=(ci,p)=>(START[ci]+p)%52;
+
+let cfg=Object.assign({sound:1,speed:1,pin:'0000',boost:[0,0,0,0]},LS.get('lm_cfg',{}));
+if(!Array.isArray(cfg.boost)||cfg.boost.length!==4)cfg.boost=[0,0,0,0];
+let setup=LS.get('lm_setup',[{t:1,n:'খেলোয়াড় ১'},{t:0,n:'খেলোয়াড় ২'},{t:1,n:'খেলোয়াড় ৩'},{t:0,n:'খেলোয়াড় ৪'}]);
+const saveCfg=()=>LS.set('lm_cfg',cfg);
+
+/* ---------- স্ক্রিন ---------- */
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));$(id).classList.add('on');if(id==='game')setTimeout(fit,30)}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
+$('toSettings').onclick=()=>{renderSettings();show('settings')};
+
+/* ---------- মেনু ---------- */
+function renderSetup(){
+  $('setupList').innerHTML=COLORS.map((c,i)=>`<div class="row"><span class="dot" style="background:${c.c}"></span>
+  <input type="text" maxlength="12" value="${setup[i].n}" data-n="${i}" placeholder="${c.n}">
+  <select data-t="${i}"><option value="0">বন্ধ</option><option value="1">মানুষ</option><option value="2">কম্পিউটার</option></select></div>`).join('');
+  document.querySelectorAll('[data-t]').forEach(s=>{s.value=setup[s.dataset.t].t;s.onchange=()=>{setup[s.dataset.t].t=+s.value;LS.set('lm_setup',setup)}});
+  document.querySelectorAll('[data-n]').forEach(s=>s.oninput=()=>{setup[s.dataset.n].n=s.value;LS.set('lm_setup',setup)});
+}
+$('startBtn').onclick=startGame;
+
+/* ---------- সেটিং ---------- */
+function renderSettings(){
+  document.querySelectorAll('#segSound button').forEach(b=>b.classList.toggle('on',+b.dataset.v===+cfg.sound));
+  document.querySelectorAll('#segSpeed button').forEach(b=>b.classList.toggle('on',+b.dataset.v===+cfg.speed));
+}
+document.querySelectorAll('#segSound button').forEach(b=>b.onclick=()=>{cfg.sound=+b.dataset.v;saveCfg();renderSettings()});
+document.querySelectorAll('#segSpeed button').forEach(b=>b.onclick=()=>{cfg.speed=+b.dataset.v;saveCfg();renderSettings()});
+$('verRow').onclick=()=>{pinBuf='';renderPin();show('pin')};
+
+/* ---------- পিন ---------- */
+let pinBuf='';
+$('keys').innerHTML=['1','2','3','4','5','6','7','8','9','','0','⌫'].map(k=>k?`<button data-k="${k}">${k}</button>`:'<span></span>').join('');
+document.querySelectorAll('#keys button').forEach(b=>b.onclick=()=>pinKey(b.dataset.k));
+function renderPin(){$('pinDots').innerHTML=[0,1,2,3].map(i=>`<i class="${i<pinBuf.length?'on':''}"></i>`).join('')}
+function pinKey(k){
+  if(k==='⌫')pinBuf=pinBuf.slice(0,-1);else if(pinBuf.length<4)pinBuf+=k;
+  renderPin();
+  if(pinBuf.length===4){const ok=pinBuf===cfg.pin;setTimeout(()=>{pinBuf='';renderPin();if(ok){renderSecret();show('secret')}else show('about')},150)}
+}
+function renderSecret(){
+  $('secList').innerHTML=COLORS.map((c,i)=>`<div class="row"><span class="dot" style="background:${c.c}"></span><b style="width:44px">${c.n}</b><input type="range" min="0" max="100" step="5" value="${cfg.boost[i]}" data-i="${i}"><span id="bv${i}" style="width:42px;text-align:right">${cfg.boost[i]}%</span></div>`).join('');
+  document.querySelectorAll('#secList input').forEach(r=>r.oninput=()=>{cfg.boost[r.dataset.i]=+r.value;$('bv'+r.dataset.i).textContent=r.value+'%';saveCfg()});
+}
+$('savePin').onclick=()=>{const v=$('newPin').value.trim();if(/^\d{4}$/.test(v)){cfg.pin=v;saveCfg();$('newPin').value='';alert('পিন বদলানো হয়েছে')}else alert('৪টি সংখ্যা দিন')};
+
+/* ---------- সাউন্ড ---------- */
+let AC;
+function beep(f,d=.08){if(!+cfg.sound)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.value=.07;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms*[1.6,1,.5][cfg.speed]));
+
+/* ---------- খেলার যুক্তি ---------- */
+let G=null;
+function startGame(){
+  const act=setup.map((s,i)=>({ci:i,t:s.t,n:(s.n||'').trim()||COLORS[i].n})).filter(a=>a.t>0);
+  if(act.length<2){alert('কমপক্ষে ২ জন খেলোয়াড় বেছে নিন');return}
+  G={pl:act.map(a=>({ci:a.ci,name:a.n,type:a.t,p:[-1,-1,-1,-1],fin:0})),turn:0,v:0,sixes:0,state:'idle',mv:[],over:false,id:Date.now()};
+  $('over').classList.remove('on');setDie(0);show('game');beginTurn();
+}
+function renderBar(){
+  $('bar').innerHTML='<button id="menuBtn">☰</button>'+G.pl.map((p,i)=>`<div class="chip ${i===G.turn?'on':''}" style="--c:${COLORS[p.ci].c}">${p.type===2?'🤖 ':''}${p.name}</div>`).join('');
+  $('menuBtn').onclick=()=>{if(confirm('খেলা ছেড়ে মেনুতে যাবে?')){G.id=-1;show('menu')}};
+}
+const setMsg=t=>$('msg').textContent=t;
+const PAT={0:[],1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+$('die').innerHTML='<i></i>'.repeat(9);
+function setDie(v){[...$('die').children].forEach((d,i)=>d.classList.toggle('on',PAT[v].includes(i)))}
+function beginTurn(){
+  if(G.over)return;const pl=G.pl[G.turn];const id=G.id;
+  G.state='idle';renderBar();$('die').style.borderColor=COLORS[pl.ci].c;
+  $('die').classList.toggle('wait',pl.type===1);
+  if(pl.type===2){setMsg(pl.name+' খেলছে...');sleep(700).then(()=>{if(G.id===id)doRoll()})}
+  else setMsg(pl.name+', ছক্কা ফেলুন 🎲');
+}
+function nextTurn(){G.sixes=0;G.turn=(G.turn+1)%G.pl.length;beginTurn()}
+$('die').onclick=()=>{if(G&&G.state==='idle'&&G.pl[G.turn].type===1)doRoll()};
+
+const legal=(pl,v)=>[0,1,2,3].filter(i=>{const p=pl.p[i];return(p===-1&&v===6)||(p>=0&&p<56&&p+v<=56)});
+function moveScore(pl,i,v){
+  const p=pl.p[i],np=p===-1?0:p+v;let s=0;
+  if(np===56)s=90;
+  else if(np<=50){const a=abs(pl.ci,np);if(!SAFE.has(a))for(const o of G.pl){if(o===pl)continue;for(const q of o.p)if(q>=0&&q<=50&&abs(o.ci,q)===a)s=100}}
+  if(!s){if(p===-1)s=70;else if(np>=51)s=45+np-p;else s=np-p}
+  return s;
+}
+function bestMove(pl,v,mv){let b=mv[0],bs=-1;for(const i of mv){const s=moveScore(pl,i,v)+Math.random();if(s>bs){bs=s;b=i}}return[b,bs]}
+function bestRoll(pl){
+  const max=(pl===G.pl[G.turn]&&G.sixes>=2)?5:6;let bv=0,bsc=-1;
+  for(let v=1;v<=max;v++){const mv=legal(pl,v);let s=mv.length?bestMove(pl,v,mv)[1]:0;if(v===6)s+=15;if(s>bsc){bsc=s;bv=v}}
+  return bv||1;
+}
+function pickRoll(pl){
+  const b=cfg.boost[pl.ci]||0;
+  if(Math.random()*100<b)return bestRoll(pl);
+  return 1+Math.floor(Math.random()*6);
+}
+
+async function doRoll(){
+  const id=G.id;if(G.state!=='idle')return;G.state='rolling';
+  $('die').classList.remove('wait');
+  const pl=G.pl[G.turn];const v=pickRoll(pl);
+  for(let i=0;i<8;i++){setDie(1+Math.floor(Math.random()*6));beep(300+i*40,.04);await sleep(70);if(G.id!==id)return}
+  setDie(v);G.v=v;
+  if(v===6)G.sixes++;
+  if(G.sixes>=3){setMsg('তিন ছক্কা! এই চাল বাতিল');await sleep(1000);if(G.id!==id)return;return nextTurn()}
+  const mv=legal(pl,v);
+  if(!mv.length){setMsg('চালার মতো গুটি নেই');await sleep(900);if(G.id!==id)return;return nextTurn()}
+  if(pl.type===2){await sleep(500);if(G.id!==id)return;return doMove(pl,bestMove(pl,v,mv)[0],v)}
+  if(mv.length===1||mv.every(i=>pl.p[i]===pl.p[mv[0]])){await sleep(250);if(G.id!==id)return;return doMove(pl,mv[0],v)}
+  G.state='pick';G.mv=mv;setMsg('একটা গুটি বেছে নিন 👆');
+}
+async function doMove(pl,i,v){
+  const id=G.id;G.state='moving';G.mv=[];
+  if(pl.p[i]===-1){pl.p[i]=0;beep(520,.1);await sleep(300)}
+  else for(let s=0;s<v;s++){pl.p[i]++;beep(400,.03);await sleep(150);if(G.id!==id)return}
+  if(G.id!==id)return;
+  let cap=false,home=false;const p=pl.p[i];
+  if(p>=0&&p<=50){const a=abs(pl.ci,p);if(!SAFE.has(a))for(const o of G.pl){if(o===pl)continue;for(let j=0;j<4;j++)if(o.p[j]>=0&&o.p[j]<=50&&abs(o.ci,o.p[j])===a){o.p[j]=-1;cap=true}}}
+  if(cap){beep(180,.25);setMsg('গুটি কাটা পড়েছে! আবার চাল');await sleep(800)}
+  if(p===56){pl.fin++;home=true;beep(800,.3);if(pl.fin===4){return win(pl)}setMsg('গুটি বাড়িতে পৌঁছেছে! আবার চাল');await sleep(800)}
+  if(G.id!==id)return;
+  if(v===6||cap||home){if(v!==6)G.sixes=0;beginTurn()}else nextTurn();
+}
+function win(pl){
+  G.over=true;G.state='over';[660,780,920,1100].forEach((f,k)=>setTimeout(()=>beep(f,.25),k*180));
+  $('overT').textContent='🏆 '+pl.name+' জিতেছে!';$('overS').textContent=COLORS[pl.ci].n+' দল সবার আগে সব গুটি বাড়িতে নিয়ে এসেছে';
+  $('over').classList.add('on');
+}
+$('again').onclick=startGame;
+$('toMenu').onclick=()=>{G.id=-1;$('over').classList.remove('on');show('menu')};
+
+/* ---------- আঁকা ---------- */
+const cv=$('cv'),ctx=cv.getContext('2d');let S=300,dpr=1;
+function fit(){const w=$('cvwrap');S=Math.floor(Math.min(w.clientWidth-8,w.clientHeight-8));if(S<100)S=100;dpr=window.devicePixelRatio||1;cv.style.width=cv.style.height=S+'px';cv.width=cv.height=Math.floor(S*dpr)}
+window.addEventListener('resize',()=>setTimeout(fit,50));
+if(window.ResizeObserver)new ResizeObserver(fit).observe($('cvwrap'));
+
+function pieceXY(pl,i){
+  const p=pl.p[i],c=pl.ci;
+  if(p===-1)return BASE[c][i];
+  if(p<=50){const t=TRACK[abs(c,p)];return[t[0]+.5,t[1]+.5]}
+  if(p<=55){const t=COLS[c][p-51];return[t[0]+.5,t[1]+.5]}
+  const o=[[-.9,0],[0,-.9],[.9,0],[0,.9]][c],sp=[[-.25,-.25],[.25,-.25],[-.25,.25],[.25,.25]][i];
+  return[7.5+o[0]+sp[0],7.5+o[1]+sp[1]];
+}
+function draw(t){
+  const u=S/15;ctx.setTransform(dpr*u,0,0,dpr*u,0,0);
+  ctx.clearRect(0,0,15,15);ctx.fillStyle='#fff';ctx.fillRect(0,0,15,15);
+  COLORS.forEach((c,i)=>{
+    const[ox,oy]=ORG[i];ctx.fillStyle=c.c;ctx.fillRect(ox,oy,6,6);
+    ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect?ctx.roundRect(ox+1,oy+1,4,4,.5):ctx.rect(ox+1,oy+1,4,4);ctx.fill();
+    BASE[i].forEach(s=>{ctx.fillStyle=c.l;ctx.beginPath();ctx.arc(s[0],s[1],.5,0,7);ctx.fill();ctx.strokeStyle=c.c;ctx.lineWidth=.06;ctx.stroke()});
+  });
+  ctx.lineWidth=.04;ctx.strokeStyle='#666';
+  TRACK.forEach((c,i)=>{
+    const si=START.indexOf(i);ctx.fillStyle=si>=0?COLORS[si].c:'#fff';ctx.fillRect(c[0],c[1],1,1);ctx.strokeRect(c[0],c[1],1,1);
+  });
+  COLS.forEach((col,i)=>col.forEach(c=>{ctx.fillStyle=COLORS[i].c;ctx.fillRect(c[0],c[1],1,1);ctx.strokeRect(c[0],c[1],1,1)}));
+  ctx.fillStyle='#777';ctx.font='.7px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  [8,21,34,47].forEach(i=>ctx.fillText('★',TRACK[i][0]+.5,TRACK[i][1]+.55));
+  [[[6,6],[6,9]],[[6,6],[9,6]],[[9,6],[9,9]],[[6,9],[9,9]]].forEach((tr,i)=>{
+    ctx.fillStyle=COLORS[i].c;ctx.beginPath();ctx.moveTo(tr[0][0],tr[0][1]);ctx.lineTo(tr[1][0],tr[1][1]);ctx.lineTo(7.5,7.5);ctx.closePath();ctx.fill();ctx.stroke();
+  });
+  if(!G)return;
+  const groups={},list=[];
+  G.pl.forEach((pl,pi)=>pl.p.forEach((p,i)=>{const[x,y]=pieceXY(pl,i);const k=Math.round(x*10)+','+Math.round(y*10);(groups[k]=groups[k]||[]).push(1);list.push({pl,i,x,y,k,n:groups[k].length-1})}));
+  list.sort((a,b)=>a.y-b.y);
+  const cur=G.pl[G.turn];
+  list.forEach(o=>{
+    const g=groups[o.k].length;let x=o.x,y=o.y,r=.38;
+    if(g>1&&o.pl.p[o.i]!==-1&&o.pl.p[o.i]!==56){r=.27;const a=o.n*(6.28/g);x+=Math.cos(a)*.22;y+=Math.sin(a)*.22}
+    if(o.pl.p[o.i]===56)r=.2;
+    const c=COLORS[o.pl.ci];
+    const can=G.state==='pick'&&o.pl===cur&&G.mv.includes(o.i);
+    if(can)y-=Math.abs(Math.sin(t/180))*.12;
+    ctx.fillStyle='#0003';ctx.beginPath();ctx.ellipse(x+.04,y+.1,r,r*.8,0,0,7);ctx.fill();
+    ctx.fillStyle=c.c;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();
+    ctx.lineWidth=.08;ctx.strokeStyle='#fff';ctx.stroke();
+    ctx.fillStyle='#fff6';ctx.beginPath();ctx.arc(x-r*.3,y-r*.3,r*.3,0,7);ctx.fill();
+    if(can){ctx.lineWidth=.1;ctx.strokeStyle='#000';ctx.beginPath();ctx.arc(x,y,r+.12+.05*Math.sin(t/120),0,7);ctx.stroke()}
+  });
+}
+function loop(t){if($('game').classList.contains('on'))draw(t);requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+
+cv.addEventListener('pointerdown',e=>{
+  if(!G||G.state!=='pick')return;
+  const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*15,y=(e.clientY-r.top)/r.height*15;
+  const pl=G.pl[G.turn];let best=-1,bd=1.1;
+  G.mv.forEach(i=>{const[px,py]=pieceXY(pl,i);const d=Math.hypot(px-x,py-y);if(d<bd){bd=d;best=i}});
+  if(best>=0)doMove(pl,best,G.v);
+});
+
+renderSetup();renderSettings();
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
+</script>
+</body>
+</html>
