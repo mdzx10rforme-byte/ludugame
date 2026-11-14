@@ -9,64 +9,82 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="লুডু মাস্টার">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a237e'/%3E%3Crect x='20' y='20' width='60' height='60' rx='12' fill='white'/%3E%3Ccircle cx='35' cy='35' r='7' fill='%23e53935'/%3E%3Ccircle cx='65' cy='35' r='7' fill='%2343a047'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%231a237e'/%3E%3Ccircle cx='35' cy='65' r='7' fill='%231e88e5'/%3E%3Ccircle cx='65' cy='65' r='7' fill='%23fbc02d'/%3E%3C/svg%3E">
+<link rel="icon" href="icon-192.png">
 <title>লুডু মাস্টার</title>
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
 html,body{margin:0;height:100%;background:#1a237e;font-family:system-ui,-apple-system,"Noto Sans Bengali","Segoe UI",sans-serif;color:#222;overflow:hidden;touch-action:manipulation}
 .screen{display:none;position:fixed;inset:0;flex-direction:column;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 .screen.on{display:flex}
-.page{background:linear-gradient(160deg,#1a237e,#3949ab);color:#fff;align-items:center;overflow-y:auto}
-.wrap{width:100%;max-width:460px;padding:18px 16px 28px}
-h1{text-align:center;font-size:34px;margin:10px 0 2px;letter-spacing:1px}
-.sub{text-align:center;opacity:.8;margin-bottom:18px}
+.page{background:radial-gradient(circle at 20% 10%,#5c6bc0 0,transparent 45%),radial-gradient(circle at 85% 90%,#00897b 0,transparent 40%),linear-gradient(160deg,#1a237e,#283593 60%,#311b92);color:#fff;align-items:center;overflow-y:auto}
+.wrap{width:100%;max-width:460px;padding:18px 16px 28px;position:relative;z-index:1}
+.deco{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.deco span{position:absolute;font-size:34px;opacity:.12;animation:fl 9s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-26px) rotate(25deg)}}
+h1{text-align:center;font-size:38px;margin:10px 0 2px;letter-spacing:1px;text-shadow:0 4px 0 #0005,0 0 24px #ffb30088}
+.sub{text-align:center;opacity:.85;margin-bottom:18px}
 h2{text-align:center;margin:8px 0 16px}
-.card{background:#fff;color:#222;border-radius:16px;padding:12px;margin-bottom:12px;box-shadow:0 4px 14px #0004}
+.card{background:#fff;color:#222;border-radius:18px;padding:12px;margin-bottom:12px;box-shadow:0 8px 22px #0005}
 .row{display:flex;align-items:center;gap:10px;padding:8px 4px}
 .row+.row{border-top:1px solid #eee}
-.dot{width:22px;height:22px;border-radius:50%;flex:none;border:2px solid #fff;box-shadow:0 0 0 1px #0003}
-input[type=text],input[type=tel],select{font:inherit;padding:8px 10px;border:1px solid #ccc;border-radius:10px;background:#fff;min-width:0}
+.dot{width:26px;height:26px;border-radius:50%;flex:none;border:2px solid #fff;box-shadow:0 0 0 1px #0003,inset 0 -4px 6px #0003,inset 0 3px 4px #fff8}
+input[type=text],input[type=tel],select{font:inherit;padding:9px 10px;border:1px solid #ccc;border-radius:12px;background:#fff;min-width:0}
 input[type=text]{flex:1}
 input[type=range]{flex:1}
 button{font:inherit;cursor:pointer}
-.btn{display:block;width:100%;padding:14px;border:0;border-radius:14px;background:#ffb300;color:#222;font-weight:700;font-size:18px;box-shadow:0 3px 0 #b27d00;margin-top:8px}
-.btn.alt{background:#fff;color:#1a237e;box-shadow:0 3px 0 #9fa8da}
+.btn{display:block;width:100%;padding:15px;border:0;border-radius:16px;background:linear-gradient(#ffd54f,#ffb300);color:#3e2723;font-weight:800;font-size:19px;box-shadow:0 5px 0 #b27d00,0 10px 18px #0004;margin-top:10px;transition:transform .08s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #b27d00}
+.btn.alt{background:linear-gradient(#fff,#e8eaf6);color:#1a237e;box-shadow:0 5px 0 #9fa8da,0 10px 18px #0003}
 .link{background:none;border:0;color:#fff;padding:10px;font-size:16px;opacity:.9}
 .seg{display:flex;gap:6px}
 .seg button{padding:8px 12px;border-radius:10px;border:1px solid #ccc;background:#fff}
 .seg button.on{background:#3949ab;color:#fff;border-color:#3949ab}
 .chev{margin-left:auto;color:#999}
 /* game */
-#game{background:#e8eaf6}
+#game{background:radial-gradient(circle at 50% 30%,#3949ab,#1a237e 70%)}
 #bar{display:flex;gap:6px;padding:8px;flex-wrap:wrap;justify-content:center;align-items:center}
-.chip{padding:5px 10px;border-radius:20px;background:#fff;border:3px solid var(--c);font-size:13px;font-weight:600;opacity:.55;max-width:42vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.chip.on{opacity:1;background:var(--c);color:#fff;transform:scale(1.08)}
-#menuBtn{border:0;background:#fff;border-radius:10px;padding:6px 10px;font-size:18px}
+.chip{padding:5px 11px;border-radius:20px;background:#ffffff22;color:#fff;border:2px solid var(--c);font-size:13px;font-weight:700;opacity:.6;max-width:42vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:all .25s}
+.chip.on{opacity:1;background:var(--c);transform:scale(1.1);box-shadow:0 0 14px var(--c)}
+#menuBtn{border:0;background:#ffffff33;color:#fff;border-radius:10px;padding:6px 11px;font-size:18px}
 #cvwrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
-canvas{border-radius:10px;box-shadow:0 4px 16px #0005;background:#fff}
-#foot{display:flex;align-items:center;gap:14px;padding:10px 14px 14px;justify-content:center}
-#msg{flex:1;font-weight:600;font-size:15px;min-height:40px;display:flex;align-items:center}
-#die{width:66px;height:66px;background:#fff;border-radius:14px;border:4px solid #888;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:7px;gap:2px;box-shadow:0 4px 0 #0003;flex:none}
-#die i{border-radius:50%}
-#die i.on{background:#222}
-#die.wait{animation:pulse .8s infinite}
-@keyframes pulse{50%{transform:scale(1.12)}}
+canvas#cv{box-sizing:content-box;border:7px solid #6d4c2f;border-radius:16px;box-shadow:0 0 0 2px #3e2a17,0 10px 30px #000a;background:#fff;transition:transform .1s}
+canvas#cv.shake{animation:shk .35s}
+@keyframes shk{20%{transform:translate(-5px,2px)}40%{transform:translate(5px,-2px)}60%{transform:translate(-4px,-1px)}80%{transform:translate(3px,2px)}}
+#foot{display:flex;align-items:center;gap:14px;padding:10px 18px 16px;justify-content:center}
+#msg{flex:1;font-weight:700;font-size:15px;min-height:44px;display:flex;align-items:center;color:#fff;text-shadow:0 2px 4px #0006}
+#dieWrap{width:66px;height:66px;perspective:420px;flex:none;filter:drop-shadow(0 8px 6px #0006)}
+#dieWrap.toss{animation:toss .8s}
+#dieWrap.wait{animation:pulse .8s infinite}
+@keyframes toss{0%{translate:0 0}35%{translate:0 -34px;scale:1.2}100%{translate:0 0}}
+@keyframes pulse{50%{scale:1.14}}
+#cube{width:100%;height:100%;position:relative;transform-style:preserve-3d}
+.face{position:absolute;inset:0;background:linear-gradient(145deg,#fff,#dfe3ea);border:2px solid #b8bec9;border-radius:13px;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:10px;gap:2px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face i{border-radius:50%}
+.face i.on{background:radial-gradient(circle at 35% 30%,#666,#111);box-shadow:inset 0 -2px 2px #0008}
+.f1 i.on{background:radial-gradient(circle at 35% 30%,#ff6f60,#b71c1c)}
+.f1{transform:translateZ(33px)}.f6{transform:rotateY(180deg) translateZ(33px)}.f2{transform:rotateY(90deg) translateZ(33px)}
+.f5{transform:rotateY(-90deg) translateZ(33px)}.f3{transform:rotateX(90deg) translateZ(33px)}.f4{transform:rotateX(-90deg) translateZ(33px)}
 #over{position:absolute;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:5}
 #over.on{display:flex}
-#over .box{background:#fff;border-radius:20px;padding:24px;width:min(86vw,340px);text-align:center}
+#over .box{background:#fff;border-radius:22px;padding:24px;width:min(86vw,340px);text-align:center;animation:pop .5s}
+@keyframes pop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
 #over h2{margin:0 0 6px;font-size:26px}
+#conf{position:fixed;inset:0;pointer-events:none;z-index:9;display:none;width:100%;height:100%}
 .keys{display:grid;grid-template-columns:repeat(3,76px);gap:12px;justify-content:center;margin-top:20px}
 .keys button{height:62px;border-radius:50%;border:0;background:#ffffff22;color:#fff;font-size:26px}
+.keys button:active{background:#ffffff55}
 .dots{display:flex;gap:14px;justify-content:center;margin:20px 0}
 .dots i{width:16px;height:16px;border-radius:50%;border:2px solid #fff}
 .dots i.on{background:#fff}
-.hint{font-size:13px;opacity:.8;text-align:center;margin:6px 0 14px}
+.hint{font-size:13px;opacity:.85;text-align:center;margin:6px 0 14px}
 </style>
 </head>
 <body>
 
 <!-- মেনু -->
-<div class="screen page on" id="menu"><div class="wrap">
+<div class="screen page on" id="menu">
+  <div class="deco"><span style="left:6%;top:12%">🎲</span><span style="left:80%;top:20%;animation-delay:-2s">🎲</span><span style="left:12%;top:70%;animation-delay:-4s">🎲</span><span style="left:75%;top:78%;animation-delay:-6s">🎲</span><span style="left:45%;top:92%;animation-delay:-3s">🎲</span></div>
+  <div class="wrap">
   <h1>🎲 লুডু মাস্টার</h1>
   <div class="sub">২ থেকে ৪ জন খেলোয়াড়</div>
   <div class="card" id="setupList"></div>
@@ -80,7 +98,7 @@ canvas{border-radius:10px;box-shadow:0 4px 16px #0005;background:#fff}
   <div class="card">
     <div class="row"><b>শব্দ</b><span style="margin-left:auto" class="seg" id="segSound"><button data-v="1">চালু</button><button data-v="0">বন্ধ</button></span></div>
     <div class="row"><b>গতি</b><span style="margin-left:auto" class="seg" id="segSpeed"><button data-v="0">ধীর</button><button data-v="1">সাধারণ</button><button data-v="2">দ্রুত</button></span></div>
-    <div class="row" id="verRow" style="cursor:pointer"><b>গেম সংস্করণ</b><span class="chev">১.০ ›</span></div>
+    <div class="row" id="verRow" style="cursor:pointer"><b>গেম সংস্করণ</b><span class="chev">২.০ ›</span></div>
   </div>
   <button class="btn alt" data-go="menu">← ফিরে যাও</button>
 </div></div>
@@ -98,7 +116,7 @@ canvas{border-radius:10px;box-shadow:0 4px 16px #0005;background:#fff}
   <h2>গেম সংস্করণ</h2>
   <div class="card" style="text-align:center;line-height:1.8">
     <div style="font-size:44px">🎲</div>
-    <b>লুডু মাস্টার</b><br>সংস্করণ ১.০<br><span style="color:#666">আপনি সর্বশেষ সংস্করণ ব্যবহার করছেন।</span>
+    <b>লুডু মাস্টার</b><br>সংস্করণ ২.০<br><span style="color:#666">আপনি সর্বশেষ সংস্করণ ব্যবহার করছেন।</span>
   </div>
   <button class="btn alt" data-go="settings">← ফিরে যাও</button>
 </div></div>
@@ -116,14 +134,19 @@ canvas{border-radius:10px;box-shadow:0 4px 16px #0005;background:#fff}
 <div class="screen" id="game">
   <div id="bar"></div>
   <div id="cvwrap"><canvas id="cv"></canvas></div>
-  <div id="foot"><div id="msg"></div><div id="die"></div></div>
+  <div id="foot"><div id="msg"></div><div id="dieWrap"><div id="cube"></div></div></div>
   <div id="over"><div class="box"><h2 id="overT"></h2><div id="overS" style="margin-bottom:12px"></div><button class="btn" id="again">🔁 আবার খেলো</button><button class="btn alt" id="toMenu">মেনু</button></div></div>
 </div>
+<canvas id="conf"></canvas>
 
 <script>
 const $=id=>document.getElementById(id);
 const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const COLORS=[{n:'লাল',c:'#e53935',l:'#ffcdd2'},{n:'সবুজ',c:'#43a047',l:'#c8e6c9'},{n:'হলুদ',c:'#fbc02d',l:'#fff9c4'},{n:'নীল',c:'#1e88e5',l:'#bbdefb'}];
+const COLORS=[
+ {n:'লাল',c:'#e53935',h:'#ff8a80',d:'#8e0000',l:'#ffcdd2'},
+ {n:'সবুজ',c:'#43a047',h:'#8bd88e',d:'#00600f',l:'#c8e6c9'},
+ {n:'হলুদ',c:'#fbc02d',h:'#fff176',d:'#b28704',l:'#fff9c4'},
+ {n:'নীল',c:'#1e88e5',h:'#82c4ff',d:'#00529b',l:'#bbdefb'}];
 const START=[0,13,26,39];
 const SAFE=new Set([0,13,26,39,8,21,34,47]);
 const TRACK=[];
@@ -182,34 +205,47 @@ $('savePin').onclick=()=>{const v=$('newPin').value.trim();if(/^\d{4}$/.test(v))
 
 /* ---------- সাউন্ড ---------- */
 let AC;
-function beep(f,d=.08){if(!+cfg.sound)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.value=.07;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
-const sleep=ms=>new Promise(r=>setTimeout(r,ms*[1.6,1,.5][cfg.speed]));
+function beep(f,d=.08,type='sine',vol=.07){if(!+cfg.sound)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,AC.currentTime);g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+d);o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+const sp=()=>[1.6,1,.5][cfg.speed];
+const sleep=ms=>new Promise(r=>setTimeout(r,ms*sp()));
+function tween(ms,fn){return new Promise(res=>{const t0=performance.now();(function f(){const k=Math.min(1,(performance.now()-t0)/ms);fn(k);if(k<1)requestAnimationFrame(f);else res()})()})}
+
+/* ---------- ছক্কা (৩D) ---------- */
+const PAT={0:[],1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+$('cube').innerHTML=[1,2,3,4,5,6].map(n=>`<div class="face f${n}">${[0,1,2,3,4,5,6,7,8].map(k=>`<i class="${PAT[n].includes(k)?'on':''}"></i>`).join('')}</div>`).join('');
+const BASEROT={1:[0,0],2:[0,-90],3:[-90,0],4:[90,0],5:[0,90],6:[0,180]};
+let spin=0;
+function showDie(v,roll){
+  const cube=$('cube'),r=BASEROT[v||1];
+  if(roll){spin++;cube.style.transition='transform '+(.8*sp())+'s cubic-bezier(.15,.7,.25,1)';cube.style.transform='rotateX('+(r[0]+720*spin)+'deg) rotateY('+(r[1]+1080*spin)+'deg)'}
+  else{cube.style.transition='none';spin=0;cube.style.transform='rotateX('+r[0]+'deg) rotateY('+r[1]+'deg)'}
+}
+function toss(){const w=$('dieWrap');w.classList.remove('toss');void w.offsetWidth;w.style.animationDuration=(.8*sp())+'s';w.classList.add('toss')}
 
 /* ---------- খেলার যুক্তি ---------- */
-let G=null;
+let G=null;const A={};
 function startGame(){
   const act=setup.map((s,i)=>({ci:i,t:s.t,n:(s.n||'').trim()||COLORS[i].n})).filter(a=>a.t>0);
   if(act.length<2){alert('কমপক্ষে ২ জন খেলোয়াড় বেছে নিন');return}
+  for(const k in A)delete A[k];
   G={pl:act.map(a=>({ci:a.ci,name:a.n,type:a.t,p:[-1,-1,-1,-1],fin:0})),turn:0,v:0,sixes:0,state:'idle',mv:[],over:false,id:Date.now()};
-  $('over').classList.remove('on');setDie(0);show('game');beginTurn();
+  $('over').classList.remove('on');$('conf').style.display='none';showDie(1,false);show('game');beginTurn();
 }
 function renderBar(){
   $('bar').innerHTML='<button id="menuBtn">☰</button>'+G.pl.map((p,i)=>`<div class="chip ${i===G.turn?'on':''}" style="--c:${COLORS[p.ci].c}">${p.type===2?'🤖 ':''}${p.name}</div>`).join('');
   $('menuBtn').onclick=()=>{if(confirm('খেলা ছেড়ে মেনুতে যাবে?')){G.id=-1;show('menu')}};
 }
 const setMsg=t=>$('msg').textContent=t;
-const PAT={0:[],1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
-$('die').innerHTML='<i></i>'.repeat(9);
-function setDie(v){[...$('die').children].forEach((d,i)=>d.classList.toggle('on',PAT[v].includes(i)))}
 function beginTurn(){
   if(G.over)return;const pl=G.pl[G.turn];const id=G.id;
-  G.state='idle';renderBar();$('die').style.borderColor=COLORS[pl.ci].c;
-  $('die').classList.toggle('wait',pl.type===1);
+  G.state='idle';renderBar();
+  $('dieWrap').classList.remove('toss');$('dieWrap').classList.toggle('wait',pl.type===1);
+  $('dieWrap').style.filter='drop-shadow(0 8px 6px #0006) drop-shadow(0 0 8px '+COLORS[pl.ci].c+')';
   if(pl.type===2){setMsg(pl.name+' খেলছে...');sleep(700).then(()=>{if(G.id===id)doRoll()})}
   else setMsg(pl.name+', ছক্কা ফেলুন 🎲');
 }
 function nextTurn(){G.sixes=0;G.turn=(G.turn+1)%G.pl.length;beginTurn()}
-$('die').onclick=()=>{if(G&&G.state==='idle'&&G.pl[G.turn].type===1)doRoll()};
+$('dieWrap').onclick=()=>{if(G&&G.state==='idle'&&G.pl[G.turn].type===1)doRoll()};
 
 const legal=(pl,v)=>[0,1,2,3].filter(i=>{const p=pl.p[i];return(p===-1&&v===6)||(p>=0&&p<56&&p+v<=56)});
 function moveScore(pl,i,v){
@@ -233,101 +269,182 @@ function pickRoll(pl){
 
 async function doRoll(){
   const id=G.id;if(G.state!=='idle')return;G.state='rolling';
-  $('die').classList.remove('wait');
+  $('dieWrap').classList.remove('wait');
   const pl=G.pl[G.turn];const v=pickRoll(pl);
-  for(let i=0;i<8;i++){setDie(1+Math.floor(Math.random()*6));beep(300+i*40,.04);await sleep(70);if(G.id!==id)return}
-  setDie(v);G.v=v;
+  showDie(v,true);toss();
+  for(let k=0;k<6;k++)setTimeout(()=>beep(260+k*50,.05,'square',.03),k*110*sp());
+  await sleep(880);if(G.id!==id)return;
+  beep(520,.12,'triangle',.08);G.v=v;
   if(v===6)G.sixes++;
   if(G.sixes>=3){setMsg('তিন ছক্কা! এই চাল বাতিল');await sleep(1000);if(G.id!==id)return;return nextTurn()}
   const mv=legal(pl,v);
   if(!mv.length){setMsg('চালার মতো গুটি নেই');await sleep(900);if(G.id!==id)return;return nextTurn()}
-  if(pl.type===2){await sleep(500);if(G.id!==id)return;return doMove(pl,bestMove(pl,v,mv)[0],v)}
+  if(pl.type===2){await sleep(450);if(G.id!==id)return;return doMove(pl,bestMove(pl,v,mv)[0],v)}
   if(mv.length===1||mv.every(i=>pl.p[i]===pl.p[mv[0]])){await sleep(250);if(G.id!==id)return;return doMove(pl,mv[0],v)}
   G.state='pick';G.mv=mv;setMsg('একটা গুটি বেছে নিন 👆');
 }
+function slide(key,a,b,ms,hh,lin){
+  return tween(ms,k=>{const e=lin?k:(k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2);A[key]={x:a[0]+(b[0]-a[0])*e,y:a[1]+(b[1]-a[1])*e,h:Math.sin(Math.PI*k)*hh}});
+}
+function shake(){const c=$('cv');c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake')}
 async function doMove(pl,i,v){
   const id=G.id;G.state='moving';G.mv=[];
-  if(pl.p[i]===-1){pl.p[i]=0;beep(520,.1);await sleep(300)}
-  else for(let s=0;s<v;s++){pl.p[i]++;beep(400,.03);await sleep(150);if(G.id!==id)return}
-  if(G.id!==id)return;
-  let cap=false,home=false;const p=pl.p[i];
-  if(p>=0&&p<=50){const a=abs(pl.ci,p);if(!SAFE.has(a))for(const o of G.pl){if(o===pl)continue;for(let j=0;j<4;j++)if(o.p[j]>=0&&o.p[j]<=50&&abs(o.ci,o.p[j])===a){o.p[j]=-1;cap=true}}}
-  if(cap){beep(180,.25);setMsg('গুটি কাটা পড়েছে! আবার চাল');await sleep(800)}
-  if(p===56){pl.fin++;home=true;beep(800,.3);if(pl.fin===4){return win(pl)}setMsg('গুটি বাড়িতে পৌঁছেছে! আবার চাল');await sleep(800)}
+  const c=pl.ci,key=c*4+i;let p=pl.p[i];
+  if(p===-1){
+    await slide(key,posFor(c,-1,i),posFor(c,0,i),320*sp(),.6);
+    if(G.id!==id)return;pl.p[i]=0;p=0;beep(560,.1,'triangle',.08);
+  }else{
+    for(let s=0;s<v;s++){
+      await slide(key,posFor(c,p,i),posFor(c,p+1,i),140*sp(),.34,true);
+      if(G.id!==id)return;
+      p++;pl.p[i]=p;beep(380+s*20,.05,'triangle',.06);
+    }
+  }
+  delete A[key];
+  const caps=[];
+  if(p>=0&&p<=50){const a=abs(c,p);if(!SAFE.has(a))for(const o of G.pl){if(o===pl)continue;for(let j=0;j<4;j++)if(o.p[j]>=0&&o.p[j]<=50&&abs(o.ci,o.p[j])===a)caps.push([o,j])}}
+  const cap=caps.length>0;let home=false;
+  if(cap){
+    beep(160,.3,'sawtooth',.07);shake();setMsg('গুটি কাটা পড়েছে! আবার চাল');
+    await Promise.all(caps.map(([o,j])=>{const k2=o.ci*4+j;return slide(k2,posFor(o.ci,o.p[j],j),posFor(o.ci,-1,j),600*sp(),1.4).then(()=>{o.p[j]=-1;delete A[k2]})}));
+    if(G.id!==id)return;await sleep(250);
+  }
+  if(p===56){pl.fin++;home=true;[700,880,1050].forEach((f,k)=>setTimeout(()=>beep(f,.18,'triangle',.08),k*110));if(pl.fin===4){return win(pl)}setMsg('গুটি বাড়িতে পৌঁছেছে! আবার চাল');await sleep(800)}
   if(G.id!==id)return;
   if(v===6||cap||home){if(v!==6)G.sixes=0;beginTurn()}else nextTurn();
 }
 function win(pl){
-  G.over=true;G.state='over';[660,780,920,1100].forEach((f,k)=>setTimeout(()=>beep(f,.25),k*180));
+  G.over=true;G.state='over';[660,780,920,1100,1320].forEach((f,k)=>setTimeout(()=>beep(f,.3,'triangle',.09),k*170));
   $('overT').textContent='🏆 '+pl.name+' জিতেছে!';$('overS').textContent=COLORS[pl.ci].n+' দল সবার আগে সব গুটি বাড়িতে নিয়ে এসেছে';
-  $('over').classList.add('on');
+  confetti();setTimeout(()=>{if(G&&G.over)$('over').classList.add('on')},900);
 }
 $('again').onclick=startGame;
-$('toMenu').onclick=()=>{G.id=-1;$('over').classList.remove('on');show('menu')};
+$('toMenu').onclick=()=>{G.id=-1;$('over').classList.remove('on');$('conf').style.display='none';show('menu')};
+
+/* ---------- কনফেটি ---------- */
+let parts=[],confOn=false;
+function confetti(){
+  const cc=$('conf');cc.style.display='block';cc.width=innerWidth;cc.height=innerHeight;
+  const cols=['#e53935','#43a047','#fbc02d','#1e88e5','#fff','#ff4081','#00e5ff'];
+  parts=[];for(let k=0;k<170;k++)parts.push({x:Math.random()*cc.width,y:-20-Math.random()*cc.height*.6,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,r:Math.random()*6.28,vr:(Math.random()-.5)*.4,w:6+Math.random()*7,h:4+Math.random()*6,c:cols[k%cols.length]});
+  if(!confOn){confOn=true;requestAnimationFrame(confLoop)}
+}
+function confLoop(){
+  const cc=$('conf'),x=cc.getContext('2d');x.clearRect(0,0,cc.width,cc.height);let alive=0;
+  for(const p of parts){p.x+=p.vx+Math.sin(p.y/40)*.8;p.y+=p.vy;p.r+=p.vr;p.vy+=.02;if(p.y<cc.height+20){alive++;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()}}
+  if(alive&&cc.style.display!=='none')requestAnimationFrame(confLoop);else{confOn=false;x.clearRect(0,0,cc.width,cc.height)}
+}
 
 /* ---------- আঁকা ---------- */
-const cv=$('cv'),ctx=cv.getContext('2d');let S=300,dpr=1;
-function fit(){const w=$('cvwrap');S=Math.floor(Math.min(w.clientWidth-8,w.clientHeight-8));if(S<100)S=100;dpr=window.devicePixelRatio||1;cv.style.width=cv.style.height=S+'px';cv.width=cv.height=Math.floor(S*dpr)}
+const cv=$('cv'),ctx=cv.getContext('2d');let S=300,dpr=1,bgc=null;
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+function star(c,x,y,R){c.beginPath();for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,r=k%2?R*.42:R;c.lineTo(x+Math.cos(a)*r,y+Math.sin(a)*r)}c.closePath()}
+function lin(c,x0,y0,x1,y1,a,b){const g=c.createLinearGradient(x0,y0,x1,y1);g.addColorStop(0,a);g.addColorStop(1,b);return g}
+function drawBoard(c,px){
+  const u=px/15;c.setTransform(u,0,0,u,0,0);
+  c.fillStyle=lin(c,0,0,15,15,'#fffdf5','#f1ead8');c.fillRect(0,0,15,15);
+  /* কোণার ঘর */
+  COLORS.forEach((col,i)=>{
+    const[ox,oy]=ORG[i];
+    c.fillStyle=lin(c,ox,oy,ox+6,oy+6,col.h,col.c);c.fillRect(ox,oy,6,6);
+    c.save();c.shadowColor='rgba(0,0,0,.35)';c.shadowBlur=px/110;c.shadowOffsetY=px/220;
+    rr(c,ox+.85,oy+.85,4.3,4.3,.8);c.fillStyle='#fffdf8';c.fill();c.restore();
+    rr(c,ox+.85,oy+.85,4.3,4.3,.8);c.lineWidth=.06;c.strokeStyle='rgba(0,0,0,.18)';c.stroke();
+    BASE[i].forEach(s=>{
+      const g=c.createRadialGradient(s[0]-.15,s[1]-.15,.05,s[0],s[1],.62);g.addColorStop(0,'#fff');g.addColorStop(1,col.l);
+      c.beginPath();c.arc(s[0],s[1],.62,0,7);c.fillStyle=g;c.fill();c.lineWidth=.09;c.strokeStyle=col.c;c.stroke();
+    });
+  });
+  /* ঘর */
+  const cell=(x,y,fill)=>{rr(c,x+.04,y+.04,.92,.92,.12);c.fillStyle=fill;c.fill();c.lineWidth=.035;c.strokeStyle='rgba(60,50,30,.45)';c.stroke()};
+  TRACK.forEach((t,i)=>{
+    const si=START.indexOf(i);
+    cell(t[0],t[1],si>=0?lin(c,t[0],t[1],t[0]+1,t[1]+1,COLORS[si].h,COLORS[si].c):lin(c,t[0],t[1],t[0]+1,t[1]+1,'#ffffff','#ece7d8'));
+  });
+  COLS.forEach((col,i)=>col.forEach(t=>cell(t[0],t[1],lin(c,t[0],t[1],t[0]+1,t[1]+1,COLORS[i].h,COLORS[i].c))));
+  [8,21,34,47].forEach(i=>{const t=TRACK[i];star(c,t[0]+.5,t[1]+.53,.36);c.fillStyle='#9a9484';c.fill()});
+  START.forEach(i=>{const t=TRACK[i];star(c,t[0]+.5,t[1]+.53,.34);c.fillStyle='#fff';c.fill();c.lineWidth=.03;c.strokeStyle='rgba(0,0,0,.25)';c.stroke()});
+  /* মাঝের ত্রিভুজ */
+  const tri=[[[6,6],[6,9]],[[6,6],[9,6]],[[9,6],[9,9]],[[6,9],[9,9]]];
+  tri.forEach((tr,i)=>{
+    c.beginPath();c.moveTo(tr[0][0],tr[0][1]);c.lineTo(tr[1][0],tr[1][1]);c.lineTo(7.5,7.5);c.closePath();
+    const g=c.createLinearGradient(tr[0][0],tr[0][1],7.5,7.5);g.addColorStop(0,COLORS[i].c);g.addColorStop(1,COLORS[i].h);c.fillStyle=g;c.fill();
+    c.lineWidth=.07;c.strokeStyle='#fff';c.stroke();
+  });
+  const g=c.createRadialGradient(7.4,7.4,.05,7.5,7.5,.6);g.addColorStop(0,'#fff8c4');g.addColorStop(1,'#f9a825');
+  c.beginPath();c.arc(7.5,7.5,.5,0,7);c.fillStyle=g;c.fill();c.lineWidth=.07;c.strokeStyle='#fff';c.stroke();
+  star(c,7.5,7.52,.3);c.fillStyle='#fff';c.fill();
+}
+function fit(){
+  const w=$('cvwrap');S=Math.floor(Math.min(w.clientWidth-24,w.clientHeight-24));if(S<100)S=100;
+  dpr=Math.min(window.devicePixelRatio||1,2.5);
+  cv.style.width=cv.style.height=S+'px';cv.width=cv.height=Math.floor(S*dpr);
+  bgc=document.createElement('canvas');bgc.width=bgc.height=cv.width;drawBoard(bgc.getContext('2d'),cv.width);
+}
 window.addEventListener('resize',()=>setTimeout(fit,50));
 if(window.ResizeObserver)new ResizeObserver(fit).observe($('cvwrap'));
 
-function pieceXY(pl,i){
-  const p=pl.p[i],c=pl.ci;
+function posFor(c,p,i){
   if(p===-1)return BASE[c][i];
   if(p<=50){const t=TRACK[abs(c,p)];return[t[0]+.5,t[1]+.5]}
   if(p<=55){const t=COLS[c][p-51];return[t[0]+.5,t[1]+.5]}
-  const o=[[-.9,0],[0,-.9],[.9,0],[0,.9]][c],sp=[[-.25,-.25],[.25,-.25],[-.25,.25],[.25,.25]][i];
-  return[7.5+o[0]+sp[0],7.5+o[1]+sp[1]];
+  const o=[[-.9,0],[0,-.9],[.9,0],[0,.9]][c],s=[[-.25,-.25],[.25,-.25],[-.25,.25],[.25,.25]][i];
+  return[7.5+o[0]+s[0],7.5+o[1]+s[1]];
+}
+function pawn(c,x,y,r,col,lift){
+  const gy=y+r*.62;
+  c.fillStyle='rgba(0,0,0,'+(.3-Math.min(lift,.8)*.15)+')';c.beginPath();c.ellipse(x+.03,gy+.02,r*(.95-lift*.2),r*.36*(1-lift*.2),0,0,7);c.fill();
+  y-=lift;const yb=y+r*.62;
+  c.lineJoin='round';
+  c.fillStyle=col.d;c.beginPath();c.ellipse(x,yb-r*.1,r*.88,r*.36,0,0,7);c.fill();
+  c.lineWidth=r*.12;c.strokeStyle='rgba(255,255,255,.9)';c.stroke();
+  c.beginPath();c.moveTo(x-r*.72,yb-r*.14);c.quadraticCurveTo(x-r*.22,yb-r*.42,x-r*.27,y-r*.12);c.lineTo(x+r*.27,y-r*.12);c.quadraticCurveTo(x+r*.22,yb-r*.42,x+r*.72,yb-r*.14);c.closePath();
+  c.fillStyle=lin(c,x-r,0,x+r,0,col.c,col.d);c.fill();
+  c.fillStyle=col.c;c.beginPath();c.ellipse(x,y-r*.1,r*.42,r*.14,0,0,7);c.fill();c.lineWidth=r*.07;c.strokeStyle='rgba(255,255,255,.85)';c.stroke();
+  const hy=y-r*.42,g=c.createRadialGradient(x-r*.2,hy-r*.22,r*.04,x,hy,r*.56);g.addColorStop(0,'#fff');g.addColorStop(.25,col.h);g.addColorStop(.75,col.c);g.addColorStop(1,col.d);
+  c.beginPath();c.arc(x,hy,r*.54,0,7);c.fillStyle=g;c.fill();c.lineWidth=r*.1;c.strokeStyle='rgba(255,255,255,.92)';c.stroke();
 }
 function draw(t){
-  const u=S/15;ctx.setTransform(dpr*u,0,0,dpr*u,0,0);
-  ctx.clearRect(0,0,15,15);ctx.fillStyle='#fff';ctx.fillRect(0,0,15,15);
-  COLORS.forEach((c,i)=>{
-    const[ox,oy]=ORG[i];ctx.fillStyle=c.c;ctx.fillRect(ox,oy,6,6);
-    ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect?ctx.roundRect(ox+1,oy+1,4,4,.5):ctx.rect(ox+1,oy+1,4,4);ctx.fill();
-    BASE[i].forEach(s=>{ctx.fillStyle=c.l;ctx.beginPath();ctx.arc(s[0],s[1],.5,0,7);ctx.fill();ctx.strokeStyle=c.c;ctx.lineWidth=.06;ctx.stroke()});
-  });
-  ctx.lineWidth=.04;ctx.strokeStyle='#666';
-  TRACK.forEach((c,i)=>{
-    const si=START.indexOf(i);ctx.fillStyle=si>=0?COLORS[si].c:'#fff';ctx.fillRect(c[0],c[1],1,1);ctx.strokeRect(c[0],c[1],1,1);
-  });
-  COLS.forEach((col,i)=>col.forEach(c=>{ctx.fillStyle=COLORS[i].c;ctx.fillRect(c[0],c[1],1,1);ctx.strokeRect(c[0],c[1],1,1)}));
-  ctx.fillStyle='#777';ctx.font='.7px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-  [8,21,34,47].forEach(i=>ctx.fillText('★',TRACK[i][0]+.5,TRACK[i][1]+.55));
-  [[[6,6],[6,9]],[[6,6],[9,6]],[[9,6],[9,9]],[[6,9],[9,9]]].forEach((tr,i)=>{
-    ctx.fillStyle=COLORS[i].c;ctx.beginPath();ctx.moveTo(tr[0][0],tr[0][1]);ctx.lineTo(tr[1][0],tr[1][1]);ctx.lineTo(7.5,7.5);ctx.closePath();ctx.fill();ctx.stroke();
-  });
+  if(!bgc)return;
+  ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(bgc,0,0);
+  const u=cv.width/15;ctx.setTransform(u,0,0,u,0,0);
   if(!G)return;
-  const groups={},list=[];
-  G.pl.forEach((pl,pi)=>pl.p.forEach((p,i)=>{const[x,y]=pieceXY(pl,i);const k=Math.round(x*10)+','+Math.round(y*10);(groups[k]=groups[k]||[]).push(1);list.push({pl,i,x,y,k,n:groups[k].length-1})}));
-  list.sort((a,b)=>a.y-b.y);
   const cur=G.pl[G.turn];
+  /* চালের ঘরের আভা */
+  if(!G.over){const o=ORG[cur.ci];ctx.lineWidth=.22;ctx.strokeStyle='rgba(255,255,255,'+(.45+.45*Math.sin(t/260))+')';rr(ctx,o.length?o[0]+.1:0,o[1]+.1,5.8,5.8,.5);ctx.stroke()}
+  const picks=G.state==='pick'?G.mv:[];
+  /* গন্তব্যের চিহ্ন */
+  picks.forEach(i=>{const p=cur.p[i],np=p===-1?0:p+G.v,d=posFor(cur.ci,np,i),col=COLORS[cur.ci],s=.3+.05*Math.sin(t/140);
+    ctx.globalAlpha=.55;ctx.beginPath();ctx.arc(d[0],d[1],s+.12,0,7);ctx.fillStyle='#fff';ctx.fill();ctx.beginPath();ctx.arc(d[0],d[1],s,0,7);ctx.fillStyle=col.c;ctx.fill();ctx.globalAlpha=1});
+  const groups={},list=[],moving=[];
+  G.pl.forEach(pl=>pl.p.forEach((p,i)=>{
+    const key=pl.ci*4+i;
+    if(A[key]){moving.push({pl,i,x:A[key].x,y:A[key].y,h:A[key].h});return}
+    const[x,y]=posFor(pl.ci,p,i);const k=Math.round(x*10)+','+Math.round(y*10);(groups[k]=groups[k]||[]).push(1);list.push({pl,i,x,y,k,n:groups[k].length-1});
+  }));
+  list.sort((a,b)=>a.y-b.y);
   list.forEach(o=>{
-    const g=groups[o.k].length;let x=o.x,y=o.y,r=.38;
-    if(g>1&&o.pl.p[o.i]!==-1&&o.pl.p[o.i]!==56){r=.27;const a=o.n*(6.28/g);x+=Math.cos(a)*.22;y+=Math.sin(a)*.22}
-    if(o.pl.p[o.i]===56)r=.2;
-    const c=COLORS[o.pl.ci];
-    const can=G.state==='pick'&&o.pl===cur&&G.mv.includes(o.i);
-    if(can)y-=Math.abs(Math.sin(t/180))*.12;
-    ctx.fillStyle='#0003';ctx.beginPath();ctx.ellipse(x+.04,y+.1,r,r*.8,0,0,7);ctx.fill();
-    ctx.fillStyle=c.c;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();
-    ctx.lineWidth=.08;ctx.strokeStyle='#fff';ctx.stroke();
-    ctx.fillStyle='#fff6';ctx.beginPath();ctx.arc(x-r*.3,y-r*.3,r*.3,0,7);ctx.fill();
-    if(can){ctx.lineWidth=.1;ctx.strokeStyle='#000';ctx.beginPath();ctx.arc(x,y,r+.12+.05*Math.sin(t/120),0,7);ctx.stroke()}
+    const g=groups[o.k].length,p=o.pl.p[o.i];let x=o.x,y=o.y,r=.47;
+    if(g>1&&p!==-1&&p!==56){r=.34;const a=o.n*(6.28/g)-1.57;x+=Math.cos(a)*.24;y+=Math.sin(a)*.2}
+    if(p===56)r=.27;
+    const can=o.pl===cur&&picks.includes(o.i);let lift=0;
+    if(can){lift=Math.abs(Math.sin(t/170))*.2;ctx.lineWidth=.09;ctx.strokeStyle='#fff';ctx.beginPath();ctx.ellipse(x,y+r*.62,r*1.2+.04*Math.sin(t/120),r*.5,0,0,7);ctx.stroke()}
+    pawn(ctx,x,y,r,COLORS[o.pl.ci],lift);
   });
+  moving.forEach(o=>pawn(ctx,o.x,o.y,.47,COLORS[o.pl.ci],o.h));
 }
 function loop(t){if($('game').classList.contains('on'))draw(t);requestAnimationFrame(loop)}
 requestAnimationFrame(loop);
 
 cv.addEventListener('pointerdown',e=>{
   if(!G||G.state!=='pick')return;
-  const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*15,y=(e.clientY-r.top)/r.height*15;
-  const pl=G.pl[G.turn];let best=-1,bd=1.1;
-  G.mv.forEach(i=>{const[px,py]=pieceXY(pl,i);const d=Math.hypot(px-x,py-y);if(d<bd){bd=d;best=i}});
+  const r=cv.getBoundingClientRect(),x=(e.clientX-r.left-cv.clientLeft)/cv.clientWidth*15,y=(e.clientY-r.top-cv.clientTop)/cv.clientHeight*15;
+  const pl=G.pl[G.turn];let best=-1,bd=1.35;
+  G.mv.forEach(i=>{const q=posFor(pl.ci,pl.p[i],i);const d=Math.hypot(q[0]-x,q[1]-(y+.2));if(d<bd){bd=d;best=i}});
   if(best>=0)doMove(pl,best,G.v);
 });
 
-renderSetup();renderSettings();
+renderSetup();renderSettings();showDie(1,false);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
 </script>
 </body>
