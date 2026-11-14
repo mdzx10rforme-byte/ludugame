@@ -40,6 +40,12 @@ button{font:inherit;cursor:pointer}
 .seg button{padding:8px 12px;border-radius:10px;border:1px solid #ccc;background:#fff}
 .seg button.on{background:#3949ab;color:#fff;border-color:#3949ab}
 .chev{margin-left:auto;color:#999}
+.owner{text-align:center;background:linear-gradient(145deg,#2a1f5c,#4a2c8a);color:#fff;border:2px solid #ffd54f;position:relative;overflow:hidden;padding:16px 12px}
+.owner::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,#ffffff40 50%,transparent 65%);transform:translateX(-100%);animation:shine 3.5s infinite}
+@keyframes shine{60%,100%{transform:translateX(100%)}}
+.crown{font-size:30px;filter:drop-shadow(0 3px 4px #0008)}
+.olabel{font-size:13px;letter-spacing:2px;opacity:.85;margin-top:2px}
+.oname{font-size:34px;font-weight:800;margin-top:2px;background:linear-gradient(#fff6c2,#ffc107 60%,#ff8f00);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 2px #0007)}
 /* game */
 #game{background:radial-gradient(circle at 50% 30%,#3949ab,#1a237e 70%)}
 #bar{display:flex;gap:6px;padding:8px;flex-wrap:wrap;justify-content:center;align-items:center}
@@ -98,8 +104,9 @@ canvas#cv.shake{animation:shk .35s}
   <div class="card">
     <div class="row"><b>শব্দ</b><span style="margin-left:auto" class="seg" id="segSound"><button data-v="1">চালু</button><button data-v="0">বন্ধ</button></span></div>
     <div class="row"><b>গতি</b><span style="margin-left:auto" class="seg" id="segSpeed"><button data-v="0">ধীর</button><button data-v="1">সাধারণ</button><button data-v="2">দ্রুত</button></span></div>
-    <div class="row" id="verRow" style="cursor:pointer"><b>গেম সংস্করণ</b><span class="chev">২.০ ›</span></div>
+    <div class="row" id="verRow" style="cursor:pointer"><b>গেম সংস্করণ</b><span class="chev">২.১ ›</span></div>
   </div>
+  <div class="card owner"><div class="crown">👑</div><div class="olabel">গেমের মালিক</div><div class="oname">হোরায়রা</div></div>
   <button class="btn alt" data-go="menu">← ফিরে যাও</button>
 </div></div>
 
@@ -116,7 +123,7 @@ canvas#cv.shake{animation:shk .35s}
   <h2>গেম সংস্করণ</h2>
   <div class="card" style="text-align:center;line-height:1.8">
     <div style="font-size:44px">🎲</div>
-    <b>লুডু মাস্টার</b><br>সংস্করণ ২.০<br><span style="color:#666">আপনি সর্বশেষ সংস্করণ ব্যবহার করছেন।</span>
+    <b>লুডু মাস্টার</b><br>সংস্করণ ২.১<br><span style="color:#666">আপনি সর্বশেষ সংস্করণ ব্যবহার করছেন।</span>
   </div>
   <button class="btn alt" data-go="settings">← ফিরে যাও</button>
 </div></div>
@@ -436,12 +443,27 @@ function draw(t){
 function loop(t){if($('game').classList.contains('on'))draw(t);requestAnimationFrame(loop)}
 requestAnimationFrame(loop);
 
+let tapC=-1,tapN=0,tapT=null;
+function adjLuck(ci,d){
+  cfg.boost[ci]=Math.max(0,Math.min(100,(cfg.boost[ci]||0)+d));saveCfg();
+  try{navigator.vibrate&&navigator.vibrate(d>0?[40]:[40,90,40])}catch(e){}
+}
+function homeTap(x,y){
+  const pl=G.pl.find(p=>{const o=ORG[p.ci];return x>=o[0]&&x<o[0]+6&&y>=o[1]&&y<o[1]+6});
+  if(!pl){tapN=0;clearTimeout(tapT);return}
+  if(tapC!==pl.ci){tapC=pl.ci;tapN=0}
+  tapN++;clearTimeout(tapT);
+  tapT=setTimeout(()=>{const n=tapN;tapN=0;if(n===3)adjLuck(pl.ci,10);else if(n===4)adjLuck(pl.ci,-10)},550);
+}
 cv.addEventListener('pointerdown',e=>{
-  if(!G||G.state!=='pick')return;
+  if(!G||G.over)return;
   const r=cv.getBoundingClientRect(),x=(e.clientX-r.left-cv.clientLeft)/cv.clientWidth*15,y=(e.clientY-r.top-cv.clientTop)/cv.clientHeight*15;
-  const pl=G.pl[G.turn];let best=-1,bd=1.35;
-  G.mv.forEach(i=>{const q=posFor(pl.ci,pl.p[i],i);const d=Math.hypot(q[0]-x,q[1]-(y+.2));if(d<bd){bd=d;best=i}});
-  if(best>=0)doMove(pl,best,G.v);
+  if(G.state==='pick'){
+    const pl=G.pl[G.turn];let best=-1,bd=1.35;
+    G.mv.forEach(i=>{const q=posFor(pl.ci,pl.p[i],i);const d=Math.hypot(q[0]-x,q[1]-(y+.2));if(d<bd){bd=d;best=i}});
+    if(best>=0){doMove(pl,best,G.v);return}
+  }
+  homeTap(x,y);
 });
 
 renderSetup();renderSettings();showDie(1,false);
